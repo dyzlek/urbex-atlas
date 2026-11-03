@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSpots } from "../context/SpotsContext";
+import { useAuth } from "../context/AuthContext";
 import { CATEGORIES, ETATS, DANGERS, formaterDate, formaterGPS } from "../constantes";
 
 export default function ListePage() {
   const { spots, chargement, favoris, basculerFavori } = useSpots();
+  const { user } = useAuth();
   const [recherche, setRecherche] = useState("");
   const [categorie, setCategorie] = useState("");
   const [etat, setEtat] = useState("");
@@ -42,10 +44,12 @@ export default function ListePage() {
           <option value="nom">Nom (A → Z)</option>
           <option value="messages">Plus discutés</option>
         </select>
-        <label className="case">
-          <input type="checkbox" checked={favorisSeuls} onChange={(e) => setFavorisSeuls(e.target.checked)} />
-          Favoris ({favoris.length})
-        </label>
+        {user && (
+          <label className="case">
+            <input type="checkbox" checked={favorisSeuls} onChange={(e) => setFavorisSeuls(e.target.checked)} />
+            Favoris ({favoris.length})
+          </label>
+        )}
       </div>
 
       {chargement && <p>Chargement…</p>}
@@ -54,13 +58,15 @@ export default function ListePage() {
       <div className="grille">
         {liste.map((s) => (
           <article key={s.id} className="carte-spot">
-            <button
-              className={`etoile ${favoris.includes(s.id) ? "active" : ""}`}
-              onClick={() => basculerFavori(s.id)}
-              title="Favori"
-            >
-              {favoris.includes(s.id) ? "FAVORI" : "+ FAV"}
-            </button>
+            {user && (
+              <button
+                className={`etoile ${favoris.includes(s.id) ? "active" : ""}`}
+                onClick={() => basculerFavori(s.id)}
+                title="Favori"
+              >
+                {favoris.includes(s.id) ? "FAVORI" : "+ FAV"}
+              </button>
+            )}
             <h2><Link to={`/spots/${s.id}`}>{s.nom}</Link></h2>
             <p className="badges">
               <span className={`badge etat-${s.etat}`}>{s.etat}</span>

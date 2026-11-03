@@ -5,13 +5,16 @@ import "leaflet/dist/leaflet.css";
 import "./style.css";
 import App from "./App";
 import { SpotsProvider } from "./context/SpotsContext";
+import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <SpotsProvider>
-        <App />
-      </SpotsProvider>
+      <AuthProvider>
+        <SpotsProvider>
+          <App />
+        </SpotsProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

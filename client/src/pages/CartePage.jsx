@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CircleMarker, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useSpots } from "../context/SpotsContext";
+import { useAuth } from "../context/AuthContext";
 import { COULEUR_ETAT, DANGERS, ETATS, formaterDate, formaterGPS } from "../constantes";
 import { iconeNouveau, iconeSpot } from "../components/icones";
 import MapClick from "../components/MapClick";
@@ -13,7 +14,8 @@ import SpotForm from "../components/SpotForm";
 const CENTRE_PAR_DEFAUT = [43.3442, 3.2158]; // Béziers
 
 export default function CartePage() {
-  const { spots, favoris, ajouterSpot, modifierSpot, supprimerSpot } = useSpots();
+  const { spots, favoris, estAuteur, ajouterSpot, modifierSpot, supprimerSpot } = useSpots();
+  const { user } = useAuth();
   const location = useLocation();
 
   // Si on arrive depuis "Voir sur la carte", on centre sur ce spot
@@ -49,7 +51,13 @@ export default function CartePage() {
         <SearchBar onSelect={setCible} />
         <LocateButton onLocate={localiser} />
       </div>
-      <p className="astuce petit">// Clique sur la carte pour ajouter un spot.</p>
+      {user ? (
+        <p className="astuce petit">// Clique sur la carte pour ajouter un spot.</p>
+      ) : (
+        <p className="astuce avertissement">
+          // <Link to="/connexion" state={{ depuis: "/" }}>Connecte-toi</Link> pour ajouter des spots.
+        </p>
+      )}
 
       <div className="carte-cadre">
       {/* Incrustation façon caméra de surveillance */}
@@ -63,7 +71,8 @@ export default function CartePage() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MapClick onClick={(latlng) => { setNouveauPoint(latlng); setEnEdition(null); }} />
+        {/* Sans compte, la carte se consulte mais on ne peut pas ajouter de point */}
+        {user && <MapClick onClick={(latlng) => { setNouveauPoint(latlng); setEnEdition(null); }} />}
         <FlyTo cible={cible} />
 
         {maPosition && (
@@ -101,8 +110,12 @@ export default function CartePage() {
                   <p className="petit">{spot.nbMessages} message(s) · par {spot.auteur}</p>
                   <div className="ligne">
                     <Link to={`/spots/${spot.id}`} className="bouton">Détails & chat</Link>
-                    <button className="secondaire" onClick={() => setEnEdition(spot.id)}>Modifier</button>
-                    <button className="danger" onClick={() => supprimer(spot)}>Supprimer</button>
+                    {estAuteur(spot) && (
+                      <>
+                        <button className="secondaire" onClick={() => setEnEdition(spot.id)}>Modifier</button>
+                        <button className="danger" onClick={() => supprimer(spot)}>Supprimer</button>
+                      </>
+                    )}
                   </div>
                 </div>
               )}

@@ -1,26 +1,17 @@
-// État global de l'appli : la liste des spots, les favoris et le pseudo.
+// État global de l'appli : la liste des spots et les favoris de l'utilisateur connecté.
 // Tous les composants y accèdent avec le hook useSpots().
 import { createContext, useContext, useEffect, useState } from "react";
 import * as api from "../api";
+import { useAuth } from "./AuthContext";
 
 const SpotsContext = createContext(null);
 
-// Lit une valeur dans le localStorage (avec une valeur par défaut)
-function lireLocal(cle, defaut) {
-  try {
-    const valeur = localStorage.getItem(cle);
-    return valeur ? JSON.parse(valeur) : defaut;
-  } catch {
-    return defaut;
-  }
-}
-
 export function SpotsProvider({ children }) {
+  const { user } = useAuth();
   const [spots, setSpots] = useState([]);
   const [chargement, setChargement] = useState(true);
   const [erreur, setErreur] = useState(null);
-  const [favoris, setFavoris] = useState(() => lireLocal("favoris", []));
-  const [pseudo, setPseudo] = useState(() => lireLocal("pseudo", ""));
+  const [favoris, setFavoris] = useState([]);
 
   // 1er chargement par l'API, puis mises à jour en direct par Socket.io
   useEffect(() => {
@@ -34,12 +25,24 @@ export function SpotsProvider({ children }) {
     return () => api.socket.off("spots:update", setSpots);
   }, []);
 
-  // On garde les favoris et le pseudo d'une visite à l'autre
-  useEffect(() => localStorage.setItem("favoris", JSON.stringify(favoris)), [favoris]);
-  useEffect(() => localStorage.setItem("pseudo", JSON.stringify(pseudo)), [pseudo]);
+  // Les favoris sont enregistrés en base, par compte : on les recharge à chaque connexion
+  useEffect(() => {
+    if (!user) {
+      setFavoris([]);
+      return;
+    }
+    api.getFavoris().then(setFavoris).catch(() => setFavoris([]));
+  }, [user]);
 
-  function basculerFavori(id) {
-    setFavoris((f) => (f.includes(id) ? f.filter((x) => x !== id) : [...f, id]));
+  async function basculerFavori(id) {
+    if (!user) return;
+    if (favoris.includes(id)) {
+      setFavoris((f) => f.filter((x) => x !== id));
+      await api.retirerFavori(id);
+    } else {
+      setFavoris((f) => [...f, id]);
+      await api.ajouterFavori(id);
+    }
   }
 
   // Les fonctions CRUD n'ont pas besoin de modifier "spots" elles-mêmes :
@@ -50,9 +53,9 @@ export function SpotsProvider({ children }) {
     erreur,
     favoris,
     basculerFavori,
-    pseudo,
-    setPseudo,
-    ajouterSpot: (spot) => api.createSpot({ ...spot, auteur: pseudo || "Anonyme" }),
+    // l'utilisateur connecté peut-il modifier ce spot ? (le serveur vérifie aussi)
+    estAuteur: (spot) => !!user && spot.auteurId === user.id,
+    ajouterSpot: api.createSpot,
     modifierSpot: api.updateSpot,
     supprimerSpot: api.deleteSpot,
   };

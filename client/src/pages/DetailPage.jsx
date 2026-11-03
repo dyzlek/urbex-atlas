@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { useSpots } from "../context/SpotsContext";
+import { useAuth } from "../context/AuthContext";
 import { DANGERS, formaterDate, formaterGPS } from "../constantes";
 import { iconeSpot } from "../components/icones";
 import SpotForm from "../components/SpotForm";
@@ -10,7 +11,8 @@ import Chat from "../components/Chat";
 export default function DetailPage() {
   const { id } = useParams(); // l'id vient de l'URL /spots/:id
   const navigate = useNavigate();
-  const { spots, chargement, favoris, basculerFavori, modifierSpot, supprimerSpot } = useSpots();
+  const { spots, chargement, favoris, basculerFavori, estAuteur, modifierSpot, supprimerSpot } = useSpots();
+  const { user } = useAuth();
   const [edition, setEdition] = useState(false);
 
   const spot = spots.find((s) => s.id === id);
@@ -65,9 +67,15 @@ export default function DetailPage() {
                 {spot.updatedAt && ` · modifié le ${formaterDate(spot.updatedAt)}`}
               </p>
               <div className="ligne">
-                <button onClick={() => basculerFavori(spot.id)}>{favori ? "Retirer des favoris" : "Ajouter aux favoris"}</button>
-                <button className="secondaire" onClick={() => setEdition(true)}>Modifier</button>
-                <button className="danger" onClick={supprimer}>Supprimer</button>
+                {user && (
+                  <button onClick={() => basculerFavori(spot.id)}>{favori ? "Retirer des favoris" : "Ajouter aux favoris"}</button>
+                )}
+                {estAuteur(spot) && (
+                  <>
+                    <button className="secondaire" onClick={() => setEdition(true)}>Modifier</button>
+                    <button className="danger" onClick={supprimer}>Supprimer</button>
+                  </>
+                )}
               </div>
             </>
           )}

@@ -4,10 +4,13 @@
   "scripts": {
     "install:all": "npm install && npm install --prefix server && npm install --prefix client",
     "build": "npm install --prefix server && npm install --prefix client --include=dev && npm run build --prefix client",
-    "start": "node server/index.js",
+    "start": "node --disable-warning=ExperimentalWarning server/index.js",
     "dev": "concurrently -n serveur,client -c magenta,cyan \"npm run dev --prefix server\" \"npm run dev --prefix client\""
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
+  },
+  "engines": {
+    "node": ">=22.13"
   }
 }
