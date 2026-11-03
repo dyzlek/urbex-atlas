@@ -10,7 +10,7 @@ import SearchBar from "../components/SearchBar";
 import LocateButton from "../components/LocateButton";
 import SpotForm from "../components/SpotForm";
 
-const CENTRE_PAR_DEFAUT = [48.8566, 2.3522]; // Paris
+const CENTRE_PAR_DEFAUT = [43.3442, 3.2158]; // Béziers
 
 export default function CartePage() {
   const { spots, favoris, ajouterSpot, modifierSpot, supprimerSpot } = useSpots();
