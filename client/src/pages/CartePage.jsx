@@ -115,6 +115,8 @@ export default function CartePage() {
             ce qui supprimerait le point aussitôt.) */}
         {nouveauPoint && (
           <Marker
+            // clé = position : à chaque nouveau clic le marqueur est recréé, donc sa popup se rouvre
+            key={`${nouveauPoint.lat},${nouveauPoint.lng}`}
             position={nouveauPoint}
             icon={iconeNouveau}
             eventHandlers={{ add: (e) => e.target.openPopup() }}
