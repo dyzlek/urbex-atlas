@@ -54,6 +54,7 @@ client/src/
     LocateButton.jsx  géolocalisation (navigator.geolocation)
     SpotForm.jsx    formulaire d'ajout et de modification
     Chat.jsx        chat Socket.io d'un spot
+    Vue3D.jsx       vue 3D Streets GL (iframe)
     icones.js       marqueurs colorés (L.divIcon)
 ```
 
@@ -69,6 +70,7 @@ client/src/
 | Ajout avec popup et formulaire | `CartePage.jsx` (clic sur la carte -> popup avec `SpotForm`) |
 | Modification et suppression | popups de `CartePage.jsx`, boutons de `DetailPage.jsx`, routes `PUT` / `DELETE` dans `server/index.js` |
 | Comptes et base de données (en plus) | `server/db.js` (tables `users`, `spots`, `messages`, `favoris`), routes `/api/auth/*` et middleware `connecte` dans `server/index.js`, `context/AuthContext.jsx` |
+| Vue 3D (en plus) | `components/Vue3D.jsx` : Streets GL (bâtiments OpenStreetMap en 3D) dans une iframe, position de la caméra dans l'URL ; bouton « Vue 3D » sur la fiche d'un spot |
 | Animations (en plus) | fin de `style.css` : entrée des pages, cartes en cascade, marqueurs qui tombent, popups, barres des stats |
 | Collaboratif en temps réel | `components/Chat.jsx` (un salon Socket.io par spot) + événement `spots:update` : la carte, la liste et les stats se mettent à jour chez tout le monde |
 

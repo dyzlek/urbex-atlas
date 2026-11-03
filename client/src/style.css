@@ -503,3 +503,9 @@ button.lien:hover { background: none; color: var(--signal); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- Vue 3D (Streets GL) ---------- */
+.onglets { display: flex; gap: 0.4rem; margin-top: 1rem; }
+.vue-3d { display: flex; flex-direction: column; gap: 0.3rem; animation: apparition 0.35s ease-out; }
+.vue-3d iframe { width: 100%; height: 420px; border: 1px solid var(--asphalte); background: var(--suie); }
+.vue-3d a { color: var(--signal); align-self: flex-end; }

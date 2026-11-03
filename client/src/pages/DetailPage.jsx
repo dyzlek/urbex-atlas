@@ -7,6 +7,7 @@ import { DANGERS, formaterDate, formaterGPS } from "../constantes";
 import { iconeSpot } from "../components/icones";
 import SpotForm from "../components/SpotForm";
 import Chat from "../components/Chat";
+import Vue3D from "../components/Vue3D";
 
 export default function DetailPage() {
   const { id } = useParams(); // l'id vient de l'URL /spots/:id
@@ -14,6 +15,7 @@ export default function DetailPage() {
   const { spots, chargement, favoris, basculerFavori, estAuteur, modifierSpot, supprimerSpot } = useSpots();
   const { user } = useAuth();
   const [edition, setEdition] = useState(false);
+  const [vue3D, setVue3D] = useState(false); // carte 2D (Leaflet) ou vue 3D (Streets GL)
 
   const spot = spots.find((s) => s.id === id);
 
@@ -80,6 +82,13 @@ export default function DetailPage() {
             </>
           )}
 
+          <div className="onglets">
+            <button className={vue3D ? "secondaire" : ""} onClick={() => setVue3D(false)}>Carte 2D</button>
+            <button className={vue3D ? "" : "secondaire"} onClick={() => setVue3D(true)}>Vue 3D</button>
+          </div>
+          {vue3D ? (
+            <Vue3D lat={spot.lat} lng={spot.lng} />
+          ) : (
           <MapContainer
             key={spot.id}
             center={[spot.lat, spot.lng]}
@@ -90,6 +99,7 @@ export default function DetailPage() {
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <Marker position={[spot.lat, spot.lng]} icon={iconeSpot(spot.etat, favori)} />
           </MapContainer>
+          )}
           <button
             className="secondaire"
             onClick={() => navigate("/", { state: { cible: { lat: spot.lat, lng: spot.lng, zoom: 16 } } })}
