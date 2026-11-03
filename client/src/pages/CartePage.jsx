@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { CircleMarker, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useSpots } from "../context/SpotsContext";
-import { DANGERS } from "../constantes";
+import { COULEUR_ETAT, DANGERS, ETATS, formaterDate, formaterGPS } from "../constantes";
 import { iconeNouveau, iconeSpot } from "../components/icones";
 import MapClick from "../components/MapClick";
 import FlyTo from "../components/FlyTo";
@@ -49,8 +49,15 @@ export default function CartePage() {
         <SearchBar onSelect={setCible} />
         <LocateButton onLocate={localiser} />
       </div>
-      <p className="astuce">Clique sur la carte pour ajouter un spot.</p>
+      <p className="astuce petit">// Clique sur la carte pour ajouter un spot.</p>
 
+      <div className="carte-cadre">
+      {/* Incrustation façon caméra de surveillance */}
+      <div className="rec">
+        <b>● REC</b> CAM-01<br />
+        {formaterDate(new Date().toISOString())}<br />
+        {spots.length} SPOTS RELEVÉS
+      </div>
       <MapContainer center={CENTRE_PAR_DEFAUT} zoom={10} className="carte">
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -89,6 +96,7 @@ export default function CartePage() {
                     <span className="badge">{spot.categorie}</span>
                     <span className="badge">Danger : {DANGERS[spot.danger]}</span>
                   </p>
+                  <p className="gps">{formaterGPS(spot.lat, spot.lng)}</p>
                   {spot.description && <p>{spot.description}</p>}
                   <p className="petit">💬 {spot.nbMessages} message(s) · par {spot.auteur}</p>
                   <div className="ligne">
@@ -113,17 +121,18 @@ export default function CartePage() {
           >
             <Popup minWidth={240}>
               <h3>Nouveau spot</h3>
+              <p className="gps">{formaterGPS(nouveauPoint.lat, nouveauPoint.lng)}</p>
               <SpotForm onSubmit={creer} onCancel={() => setNouveauPoint(null)} />
             </Popup>
           </Marker>
         )}
       </MapContainer>
+      </div>
 
       <div className="legende">
-        <span><i style={{ background: "#3fb950" }} /> Accessible</span>
-        <span><i style={{ background: "#d29922" }} /> Difficile</span>
-        <span><i style={{ background: "#f85149" }} /> Muré</span>
-        <span><i style={{ background: "#6e7681" }} /> Démoli</span>
+        {ETATS.map((etat) => (
+          <span key={etat}><i style={{ background: COULEUR_ETAT[etat] }} /> {etat}</span>
+        ))}
         <span><i className="legende-favori" /> Favori</span>
       </div>
     </div>

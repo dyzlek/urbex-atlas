@@ -11,7 +11,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="navbar">
-        <span className="logo">Urbex Atlas</span>
+        <span className="logo">Urbex <span>Atlas</span></span>
         <nav>
           <NavLink to="/" end>Carte</NavLink>
           <NavLink to="/spots">Spots</NavLink>

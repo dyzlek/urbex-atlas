@@ -5,11 +5,18 @@ export const ETATS = ["Accessible", "Difficile", "Muré", "Démoli"];
 
 // Couleur du marqueur selon l'état du spot
 export const COULEUR_ETAT = {
-  Accessible: "#3fb950",
-  Difficile: "#d29922",
-  Muré: "#f85149",
-  Démoli: "#6e7681",
+  Accessible: "#A3B899", // vert-de-gris
+  Difficile: "#E5A93C", // jaune signalétique
+  Muré: "#D84A38", // rouge balise
+  Démoli: "#8A8D91", // gris béton
 };
+
+// Coordonnées façon relevé GPS : 48.91020°N 2.42310°E
+export function formaterGPS(lat, lng) {
+  const ns = lat >= 0 ? "N" : "S";
+  const eo = lng >= 0 ? "E" : "O";
+  return `${Math.abs(lat).toFixed(5)}°${ns} ${Math.abs(lng).toFixed(5)}°${eo}`;
+}
 
 export const DANGERS = { 1: "Faible", 2: "Moyen", 3: "Élevé" };
 

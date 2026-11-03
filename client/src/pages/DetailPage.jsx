@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { useSpots } from "../context/SpotsContext";
-import { DANGERS, formaterDate } from "../constantes";
+import { DANGERS, formaterDate, formaterGPS } from "../constantes";
 import { iconeSpot } from "../components/icones";
 import SpotForm from "../components/SpotForm";
 import Chat from "../components/Chat";
@@ -58,6 +58,7 @@ export default function DetailPage() {
                 <span className="badge">{spot.categorie}</span>
                 <span className="badge">Danger : {DANGERS[spot.danger]}</span>
               </p>
+              <p className="gps">{formaterGPS(spot.lat, spot.lng)}</p>
               <p>{spot.description || "Pas de description."}</p>
               <p className="petit">
                 Ajouté par {spot.auteur} le {formaterDate(spot.createdAt)}

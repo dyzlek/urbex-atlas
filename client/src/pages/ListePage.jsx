@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSpots } from "../context/SpotsContext";
-import { CATEGORIES, ETATS, DANGERS, formaterDate } from "../constantes";
+import { CATEGORIES, ETATS, DANGERS, formaterDate, formaterGPS } from "../constantes";
 
 export default function ListePage() {
   const { spots, chargement, favoris, basculerFavori } = useSpots();
@@ -67,6 +67,7 @@ export default function ListePage() {
               <span className="badge">{s.categorie}</span>
               <span className="badge">Danger : {DANGERS[s.danger]}</span>
             </p>
+            <p className="gps">{formaterGPS(s.lat, s.lng)}</p>
             <p className="description">{s.description || "Pas de description."}</p>
             <p className="petit">
               💬 {s.nbMessages} · ajouté par {s.auteur} le {formaterDate(s.createdAt)}
