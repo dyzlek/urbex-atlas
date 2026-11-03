@@ -1,0 +1,75 @@
+{
+  "spots": [
+    {
+      "id": "seed-1",
+      "nom": "La filature aux corbeaux",
+      "description": "Ancienne usine textile, grande halle avec verrière cassée. Les machines sont encore là.",
+      "categorie": "Usine",
+      "etat": "Accessible",
+      "danger": 2,
+      "lat": 48.9102,
+      "lng": 2.4231,
+      "auteur": "Nyx",
+      "createdAt": "2026-10-02T14:20:00.000Z"
+    },
+    {
+      "id": "seed-2",
+      "nom": "Sanatorium des Pins",
+      "description": "Trois étages, couloirs interminables. Planchers fragiles au dernier étage.",
+      "categorie": "Hôpital",
+      "etat": "Difficile",
+      "danger": 3,
+      "lat": 48.7421,
+      "lng": 2.1987,
+      "auteur": "Rouille",
+      "createdAt": "2026-10-10T09:05:00.000Z"
+    },
+    {
+      "id": "seed-3",
+      "nom": "Chapelle sans cloche",
+      "description": "Petite chapelle en lisière de forêt, vitraux partiellement intacts.",
+      "categorie": "Église",
+      "etat": "Accessible",
+      "danger": 1,
+      "lat": 48.8012,
+      "lng": 2.6544,
+      "auteur": "Nyx",
+      "createdAt": "2026-10-18T17:40:00.000Z"
+    },
+    {
+      "id": "seed-4",
+      "nom": "Le bunker du plateau",
+      "description": "Entrée murée depuis l'été dernier.",
+      "categorie": "Militaire",
+      "etat": "Muré",
+      "danger": 2,
+      "lat": 48.6893,
+      "lng": 2.3651,
+      "auteur": "Kilo",
+      "createdAt": "2026-10-25T11:15:00.000Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "seed-m1",
+      "spotId": "seed-1",
+      "auteur": "Rouille",
+      "texte": "Passé samedi, le gardien fait sa ronde vers 18h.",
+      "date": "2026-10-28T18:30:00.000Z"
+    },
+    {
+      "id": "seed-m2",
+      "spotId": "seed-1",
+      "auteur": "Nyx",
+      "texte": "Merci ! La lumière est top en fin de matinée sous la verrière.",
+      "date": "2026-10-28T19:02:00.000Z"
+    },
+    {
+      "id": "seed-m3",
+      "spotId": "seed-2",
+      "auteur": "Kilo",
+      "texte": "Attention l'escalier B s'est effondré.",
+      "date": "2026-10-30T10:12:00.000Z"
+    }
+  ]
+}
