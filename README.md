@@ -83,7 +83,8 @@ Pour tester le temps réel en démo : ouvrir l'appli dans deux fenêtres côte �
 - **Questions sur le code** : savoir expliquer
   - le `key` sur le marqueur du nouveau point (le bug du formulaire qui ne se rouvrait pas : sans `key`, React déplace
     le marqueur au lieu de le recréer, donc sa popup ne se rouvre pas) ;
-  - le test `closest(".leaflet-popup")` dans `MapClick` (un clic sur un bouton de la popup remonte jusqu'à la carte et
-    créait un nouveau point) ;
+  - le test au début de `MapClick` : un clic sur un bouton de la popup remonte jusqu'à la carte et créait un nouveau
+    point. Pour Annuler, React a déjà retiré le bouton de la page quand la carte reçoit le clic, d'où le test
+    `map.getContainer().contains(cible)` en plus de `closest(".leaflet-popup")` ;
   - le choix des salons Socket.io : un salon par spot (`socket.join(spotId)`), pour qu'un message n'aille qu'aux
     personnes qui regardent ce spot (`io.to(spotId).emit`), alors que `spots:update` est envoyé à tout le monde (`io.emit`).
