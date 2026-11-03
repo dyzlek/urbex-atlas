@@ -10,7 +10,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001; // en ligne, c'est l'hébergeur qui choisit le port
 const dossier = path.dirname(fileURLToPath(import.meta.url));
 const FICHIER = path.join(dossier, "data.json");
 
@@ -123,6 +123,14 @@ app.delete("/api/spots/:id", (req, res) => {
   diffuserSpots();
   res.status(204).end();
 });
+
+// ---------- Site React compilé (en ligne : un seul serveur pour l'API et le site) ----------
+const DIST = path.join(dossier, "..", "client", "dist");
+if (fs.existsSync(DIST)) {
+  app.use(express.static(DIST));
+  // Toute autre URL (/spots/123, /stats…) renvoie index.html : React Router s'occupe du reste
+  app.get("*", (req, res) => res.sendFile(path.join(DIST, "index.html")));
+}
 
 // ---------- Chat en temps réel : un salon (room) par spot ----------
 io.on("connection", (socket) => {
