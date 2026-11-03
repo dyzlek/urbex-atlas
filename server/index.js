@@ -10,7 +10,9 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
-const PORT = process.env.PORT || 3001; // en ligne, c'est l'hébergeur qui choisit le port
+// En ligne (Render), c'est l'hébergeur qui impose le port ; en local on reste sur 3001
+// (une variable PORT locale pourrait sinon entrer en conflit avec le client Vite).
+const PORT = process.env.RENDER ? process.env.PORT : 3001;
 const dossier = path.dirname(fileURLToPath(import.meta.url));
 const FICHIER = path.join(dossier, "data.json");
 

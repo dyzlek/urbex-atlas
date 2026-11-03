@@ -74,3 +74,16 @@ client/src/
    Un message (`chat:send`) est enregistré, puis renvoyé à tous les membres du salon (`chat:message`).
 
 Pour tester le temps réel en démo : ouvrir l'appli dans deux fenêtres côte à côte.
+
+## Soutenance du 1/12 : points de vigilance
+
+- **Render gratuit** : le service s'endort après 15 min et `data.json` est effacé à chaque redémarrage. Ouvrir l'appli
+  quelques minutes avant le passage, et ne pas compter sur des spots ajoutés la veille.
+- **Démo du temps réel** : deux fenêtres côte à côte suffisent (voir plus haut).
+- **Questions sur le code** : savoir expliquer
+  - le `key` sur le marqueur du nouveau point (le bug du formulaire qui ne se rouvrait pas : sans `key`, React déplace
+    le marqueur au lieu de le recréer, donc sa popup ne se rouvre pas) ;
+  - le test `closest(".leaflet-popup")` dans `MapClick` (un clic sur un bouton de la popup remonte jusqu'à la carte et
+    créait un nouveau point) ;
+  - le choix des salons Socket.io : un salon par spot (`socket.join(spotId)`), pour qu'un message n'aille qu'aux
+    personnes qui regardent ce spot (`io.to(spotId).emit`), alors que `spots:update` est envoyé à tout le monde (`io.emit`).

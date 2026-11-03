@@ -5,6 +5,8 @@ import { useMapEvents } from "react-leaflet";
 export default function MapClick({ onClick }) {
   useMapEvents({
     click(e) {
+      // Un clic dans une popup (bouton Annuler, Ajouter…) remonte jusqu'à la carte : on l'ignore
+      if (e.originalEvent.target.closest(".leaflet-popup")) return;
       onClick(e.latlng);
     },
   });
