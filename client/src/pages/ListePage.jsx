@@ -59,7 +59,7 @@ export default function ListePage() {
               onClick={() => basculerFavori(s.id)}
               title="Favori"
             >
-              ★
+              {favoris.includes(s.id) ? "FAVORI" : "+ FAV"}
             </button>
             <h2><Link to={`/spots/${s.id}`}>{s.nom}</Link></h2>
             <p className="badges">
@@ -70,7 +70,7 @@ export default function ListePage() {
             <p className="gps">{formaterGPS(s.lat, s.lng)}</p>
             <p className="description">{s.description || "Pas de description."}</p>
             <p className="petit">
-              💬 {s.nbMessages} · ajouté par {s.auteur} le {formaterDate(s.createdAt)}
+              {s.nbMessages} msg · ajouté par {s.auteur} le {formaterDate(s.createdAt)}
             </p>
           </article>
         ))}

@@ -126,7 +126,6 @@ button.danger:hover { background: var(--balise); color: var(--torche); }
   letter-spacing: 0.02em;
 }
 .gps { font-family: var(--mono); font-size: 0.75rem; color: var(--vert-de-gris); }
-.gps::before { content: "⌖ "; }
 .vide { color: var(--texte-2); font-family: var(--mono); font-size: 0.85rem; }
 .vide::before { content: "// "; }
 .erreur { color: var(--balise); margin: 0; font-family: var(--mono); font-size: 0.8rem; }
@@ -362,11 +361,13 @@ button.danger:hover { background: var(--balise); color: var(--torche); }
   background: none;
   border: none;
   clip-path: none;
-  font-size: 1.4rem;
-  color: var(--asphalte);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--beton);
   padding: 0;
 }
-.etoile:hover { background: none; color: var(--beton); }
+.etoile:hover { background: none; color: var(--torche); }
 .etoile.active { color: var(--signal); text-shadow: 0 0 10px var(--signal); }
 
 /* ---------- Page détail ---------- */

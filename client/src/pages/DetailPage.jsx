@@ -65,7 +65,7 @@ export default function DetailPage() {
                 {spot.updatedAt && ` · modifié le ${formaterDate(spot.updatedAt)}`}
               </p>
               <div className="ligne">
-                <button onClick={() => basculerFavori(spot.id)}>{favori ? "★ Retirer des favoris" : "☆ Ajouter aux favoris"}</button>
+                <button onClick={() => basculerFavori(spot.id)}>{favori ? "Retirer des favoris" : "Ajouter aux favoris"}</button>
                 <button className="secondaire" onClick={() => setEdition(true)}>Modifier</button>
                 <button className="danger" onClick={supprimer}>Supprimer</button>
               </div>

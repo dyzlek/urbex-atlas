@@ -25,7 +25,7 @@ export default function LocateButton({ onLocate }) {
 
   return (
     <button className="btn-localiser" onClick={localiser} disabled={enCours}>
-      {enCours ? "Localisation…" : "📍 Me localiser"}
+      {enCours ? "Localisation…" : "Me localiser"}
     </button>
   );
 }

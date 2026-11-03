@@ -54,7 +54,7 @@ export default function CartePage() {
       <div className="carte-cadre">
       {/* Incrustation façon caméra de surveillance */}
       <div className="rec">
-        <b>● REC</b> CAM-01<br />
+        <b>REC</b> CAM-01<br />
         {formaterDate(new Date().toISOString())}<br />
         {spots.length} SPOTS RELEVÉS
       </div>
@@ -98,7 +98,7 @@ export default function CartePage() {
                   </p>
                   <p className="gps">{formaterGPS(spot.lat, spot.lng)}</p>
                   {spot.description && <p>{spot.description}</p>}
-                  <p className="petit">💬 {spot.nbMessages} message(s) · par {spot.auteur}</p>
+                  <p className="petit">{spot.nbMessages} message(s) · par {spot.auteur}</p>
                   <div className="ligne">
                     <Link to={`/spots/${spot.id}`} className="bouton">Détails & chat</Link>
                     <button className="secondaire" onClick={() => setEnEdition(spot.id)}>Modifier</button>

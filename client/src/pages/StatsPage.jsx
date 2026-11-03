@@ -81,7 +81,7 @@ export default function StatsPage() {
             {plusDiscutes.map((s) => (
               <li key={s.id}>
                 <Link to={`/spots/${s.id}`}>{s.nom}</Link>
-                <span className="petit">💬 {s.nbMessages}</span>
+                <span className="petit">{s.nbMessages} msg</span>
               </li>
             ))}
           </ul>
